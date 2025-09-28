@@ -2,7 +2,7 @@
 
 An intelligent email analyzer that uses AI, semantic search, and vector embeddings to extract insights from promotional emails.
 
-## Features
+## Features :)
 
 - **AI Classification**: Uses transformer models to classify promotion types
 - **Semantic Search**: Vector embeddings with ChromaDB for intelligent search
