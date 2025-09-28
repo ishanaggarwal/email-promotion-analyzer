@@ -20,10 +20,6 @@ An intelligent email analyzer that uses AI, semantic search, and vector embeddin
 - ChromaDB (vector database)
 - SpaCy (NLP)
 
-### Frontend
-- React 18
-- Recharts (data visualization)
-- Axios (API calls)
 
 ## Installation
 
@@ -49,11 +45,6 @@ OPENAI_API_KEY=your_openai_api_key_here
 PORT=5000
 \`\`\`
 
-### 4. Frontend Setup
-\`\`\`bash
-cd ../frontend
-npm install
-\`\`\`
 
 ## Running the Application
 
@@ -64,11 +55,6 @@ source venv/bin/activate
 python app.py
 \`\`\`
 
-### Start Frontend (Terminal 2)
-\`\`\`bash
-cd frontend
-npm start
-\`\`\`
 
 Visit: http://localhost:3000
 
