@@ -93,7 +93,7 @@ Visit: http://localhost:3000
 - `POST /search`: Semantic search
 - `GET /health`: Health check
 
-## Interview Talking Points
+## Approach Summary
 
 1. **AI-First Approach**: Leveraged modern AI tools for rapid development
 2. **Semantic Understanding**: Goes beyond keyword matching
