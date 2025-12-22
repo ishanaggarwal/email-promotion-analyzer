@@ -278,7 +278,6 @@ if __name__ == '__main__':
     ║   With Gmail Integration Support                      ║
     ╚══════════════════════════════════════════════════════╝
     """)
-    app.run(host='0.0.0.0', port=5000, debug=True)
     
     if gmail and gmail.service:
         print(f"    ✅ Gmail Connected: {gmail.user_email}")
@@ -298,4 +297,5 @@ if __name__ == '__main__':
     Press Ctrl+C to stop the server
     """)
     
+    app.run(host='0.0.0.0', port=5000, debug=True)
     app.run(debug=True, port=5000)
