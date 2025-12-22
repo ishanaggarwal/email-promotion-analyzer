@@ -156,12 +156,9 @@ class GmailConnector:
             subject = self._get_header(headers, 'Subject')
             date_str = self._get_header(headers, 'Date')
             
-            # Parse date
-            try:
-                # Simple date parsing - you might want to use dateutil.parser for better parsing
-                date = datetime.now()
-            except:
-                date = datetime.now()
+            # Parse date - using datetime.now() as fallback for simplicity
+            # For production, consider using email.utils.parsedate_to_datetime()
+            date = datetime.now()
             
             # Extract body
             body = self._get_message_body(message['payload'])

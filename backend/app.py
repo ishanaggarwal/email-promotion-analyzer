@@ -51,10 +51,19 @@ def health():
         response.headers.add('Access-Control-Allow-Methods', 'GET,OPTIONS')
         return response
         
+    # Check Gmail connection status
+    gmail_connected = False
+    user_email = None
+    
+    if gmail_available and gmail is not None:
+        gmail_connected = gmail.service is not None
+        if gmail_connected and hasattr(gmail, 'user_email'):
+            user_email = gmail.user_email
+    
     return jsonify({
         "status": "healthy",
-        "gmail_connected": gmail is not None and gmail.service is not None if gmail_available else False,
-        "connected_email": gmail.user_email if gmail and hasattr(gmail, 'user_email') else None
+        "gmail_connected": gmail_connected,
+        "connected_email": user_email
     }), 200
 
 @app.route('/analyze', methods=['POST'])
@@ -298,4 +307,3 @@ if __name__ == '__main__':
     """)
     
     app.run(host='0.0.0.0', port=5000, debug=True)
-    app.run(debug=True, port=5000)
