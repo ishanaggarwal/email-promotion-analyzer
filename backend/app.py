@@ -1,17 +1,4 @@
-from flask import Flask, request, jsonify, @app.route('/health', methods=['GET', 'OPTIONS'])
-def health():
-    if request.method == 'OPTIONS':
-        response = make_response()
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'GET,OPTIONS')
-        return response
-        
-    return jsonify({
-        "status": "healthy",
-        "gmail_connected": gmail is not None and gmail.service is not None if gmail_available else False,
-        "connected_email": gmail.user_email if gmail and hasattr(gmail, 'user_email') else None
-    }), 200sponse
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 import json
 from email_analyzer import EmailAnalyzer
@@ -54,56 +41,20 @@ if gmail_available:
         print(f"Could not initialize Gmail: {str(e)}")
         gmail = None
 
-@app.route('/auth/google')
-def auth_google():
-    flow = Flow.from_client_secrets_file(
-        'credentials.json',
-        scopes=SCOPES,
-        redirect_uri='http://localhost:5000/oauth2callback'
-    )
-    authorization_url, state = flow.authorization_url(
-        access_type='offline',
-        include_granted_scopes='true'
-    )
-    session['state'] = state
-    return redirect(authorization_url)
-
-@app.route('/oauth2callback')
-def oauth2callback():
-    flow = Flow.from_client_secrets_file(
-        'credentials.json',
-        scopes=SCOPES,
-        state=session['state'],
-        redirect_uri='http://localhost:5000/oauth2callback'
-    )
-    
-    authorization_response = request.url
-    flow.fetch_token(authorization_response=authorization_response)
-    
-    credentials = flow.credentials
-    session['credentials'] = {
-        'token': credentials.token,
-        'refresh_token': credentials.refresh_token,
-        'token_uri': credentials.token_uri,
-        'client_id': credentials.client_id,
-        'client_secret': credentials.client_secret,
-        'scopes': credentials.scopes
-    }
-    
-    return redirect('http://localhost:3000')
-
-@app.route('/health')
+@app.route('/health', methods=['GET', 'OPTIONS'])
 def health():
-    return jsonify({
-        'status': 'healthy',
-        'auth_configured': os.path.exists('credentials.json'),
-        'authenticated': 'credentials' in session,
-        'session_active': bool(session)
-    }), 200
+    """Health check endpoint"""
+    if request.method == 'OPTIONS':
+        response = make_response()
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'GET,OPTIONS')
+        return response
+        
     return jsonify({
         "status": "healthy",
-        "gmail_connected": gmail is not None and gmail.service is not None,
-        "connected_email": gmail.user_email if gmail and gmail.user_email else None
+        "gmail_connected": gmail is not None and gmail.service is not None if gmail_available else False,
+        "connected_email": gmail.user_email if gmail and hasattr(gmail, 'user_email') else None
     }), 200
 
 @app.route('/analyze', methods=['POST'])
