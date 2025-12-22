@@ -306,4 +306,10 @@ if __name__ == '__main__':
     Press Ctrl+C to stop the server
     """)
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Note: debug=True is for development only
+    # In production, set FLASK_ENV=production or FLASK_DEBUG=False
+    debug_mode = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
+    port = int(os.getenv('PORT', 5000))
+    host = os.getenv('HOST', '0.0.0.0')
+    
+    app.run(host=host, port=port, debug=debug_mode)
